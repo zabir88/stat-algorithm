@@ -8,27 +8,32 @@ def individual_datfile(x):
     y= np.row_stack(y[:,])
     yfin= y.reshape(199,128).T
     return yfin
+
 #To average the plus and minus m
 def array_avg(a,b): 
     mean= np.mean(([a,b]), axis =0,dtype= np.float64)
     return mean
+
 #To calculate arithmetic mean
 def arithmetic_mean(a,b,c): 
     sum= np.sum((a,b), axis=0, dtype=np.float64)
     arith_mean= np.divide(sum,(2*c), dtype= np.float64)
     return arith_mean
+
 #To calculate geometric mean
 def geometric_mean(a,b,c): 
     product= np.multiply(a,b,dtype= np.float64)
     root= np.sqrt(product,dtype=np.float64)
     geo_mean= np.divide(root, c, dtype=np.float64)
     return geo_mean
+
 #To calculate log of arithmetic and geometric mean (Effective Mass)
 def log_values(a):
     log= np.empty(shape=(127,199), dtype=np.float64)
     for i in range(127):
         ratio_log[i]= (-1)*np.log(np.divide(a[i+1],a[i]), dtype=np.float64)
     return ratio_log
+
 #To calculate the mean of arithmetic and geometric mean, then take ratio and then take the log (Average Effective Mass)
 def mean_log_values(a): 
     up = np.empty(shape= (127,199), dtype= np.float64)
@@ -40,6 +45,7 @@ def mean_log_values(a):
     meandown= np.mean(down, axis=1, dtype=np.float64)
     log_mean= (-1)*np.log(np.divide(np.row_stack(meanup), np.row_stack(meandown), dtype=np.float64))
     return log_mean
+
 #To calculate standard deviation 
 def standard_dev(a,b): 
     std= np.sqrt(np.sum(np.square(np.subtract(a,b)), axis=1))
@@ -55,12 +61,14 @@ def bootstrap(data, numsampling, blocked=False):
         x= np.asarray([[[np.random.choice(flat) for elements in row] for row in data]for numresample in range(numsampling)])
     avg= np.array([np.column_stack(np.mean(row, axis=1))for row in x]).T    
     return avg.reshape(128,numsampling)
+
 #To calculate log of bootstrapped arithmetic and geometric mean 
 def bootstrap_log_values(a):
     log= np.empty(shape=(127,796), dtype=np.float64)
     for i in range(127):
         log[i]= (-1)*np.log(np.divide(a[i+1],a[i]), dtype=np.float64)
     return log
+
 #To calculate the mean of bootstrapped arithmetic and geometric mean, then take ratio and then take the log
 def bootstrap_mean_log_values(a): 
     up= np.empty(shape= (127,796), dtype= np.float64)
@@ -72,6 +80,7 @@ def bootstrap_mean_log_values(a):
     meandown= np.mean(down, axis=1, dtype=np.float64)
     log_mean= (-1)*np.log(np.divide(np.row_stack(meanup), np.row_stack(meandown), dtype=np.float64))
     return log_mean
+
 #To calculate standard deviation
 def bootstrap_standard_dev(a,b): 
     std= np.sqrt(np.sum(np.square(np.subtract(a,b)), axis=1))
